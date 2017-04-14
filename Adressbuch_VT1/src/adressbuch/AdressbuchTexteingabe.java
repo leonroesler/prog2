@@ -61,6 +61,9 @@ public class AdressbuchTexteingabe
             else if(command.equals("entferne")){
                 entferneEintrag();
             }
+            else if(command.equals("update")){
+                aendereEintrag();
+            }
             else{
                 // nichts tun.
             }
@@ -68,19 +71,27 @@ public class AdressbuchTexteingabe
 
         System.out.println("Ade.");
     }
-    
+
     /**
-     * Fuege einen neuen Eintrag hinzu.
+     * Fügt die eingegebenen Daten zu einem neuen Kontakt zusammen
+     * @return Kontakt
      */
-    private void neuerEintrag()
-    {
+    private Kontakt kontaktEinlesen(){
+
         System.out.print("Name: ");
         String name = parser.zeileEinlesen();
         System.out.print("Telefon: ");
         String telefon = parser.zeileEinlesen();
         System.out.print("Email: ");
         String adresse = parser.zeileEinlesen();
-        buch.addKontakt(new Kontakt(name, telefon, adresse));
+        return new Kontakt(name, telefon, adresse);
+    }
+    
+    /**
+     * Fuege einen neuen Eintrag hinzu.
+     */
+    private void neuerEintrag()    {
+        buch.addKontakt(kontaktEinlesen());
     }
     
     /**
@@ -115,6 +126,19 @@ public class AdressbuchTexteingabe
         String schluessel = parser.zeileEinlesen();
         buch.deleteKontakt(schluessel);
         System.out.println(schluessel + " gelöscht");
+
+    }
+
+    /**
+     * Aendert den Eintrag, der zu dem eingegeben Schluessel passt
+     */
+    private void aendereEintrag(){
+        System.out.println("Suchschluessel eingeben:");
+        String schluessel = parser.zeileEinlesen();
+        System.out.println("Neue Daten eingeben:");
+        Kontakt geaendertetKontakt = kontaktEinlesen();
+        buch.updateKontakt(schluessel, geaendertetKontakt);
+        System.out.println(geaendertetKontakt.getName() + " geupdatet");
 
     }
     

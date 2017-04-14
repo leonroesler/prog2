@@ -40,6 +40,7 @@ public class Kontakt implements Comparable<Kontakt> {
     }
 
     String gibKontaktString() {
+
         return name + ":" + telefon + ":" + email;
     }
     

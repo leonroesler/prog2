@@ -1,5 +1,9 @@
 package adressbuch;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
+import java.sql.SQLOutput;
+
 /**
  * Eine textuelle Schnittstelle fuer ein Adressbuch.
  * ueber verschiedene Befehle kann auf das Adressbuch
@@ -51,6 +55,12 @@ public class AdressbuchTexteingabe
             else if(command.equals("hilfe")){
                 hilfe();
             }
+            else if(command.equals("hole")){
+                holeEintrag();
+            }
+            else if(command.equals("entferne")){
+                entferneEintrag();
+            }
             else{
                 // nichts tun.
             }
@@ -87,14 +97,25 @@ public class AdressbuchTexteingabe
         }
     }
 
+    /**
+     * Findet genau einen Kontakt, der zu dem eingegeben Schlüssel passt
+     */
     private void holeEintrag() {
-        System.out.println("Praefix des Suchschluessels:");
-        String praefix = parser.zeileEinlesen();
-        Kontakt[] ergebnisse = buch.getKontakte(praefix);
-        for(int i = 0; i < ergebnisse.length; i++){
-            System.out.println(ergebnisse[i]);
-            System.out.println("=====");
-        }
+        System.out.println("Suchschluessel eingeben:");
+        String schluessel = parser.zeileEinlesen();
+        Kontakt ergebnis = buch.getKontakt(schluessel);
+        System.out.println(ergebnis);
+    }
+
+    /**
+     * Entfernt genau einen Eintrag, der zu dem eingegeben Schlüssel passt
+     */
+    private void entferneEintrag(){
+        System.out.println("Suchschluessel eingeben:");
+        String schluessel = parser.zeileEinlesen();
+        buch.deleteKontakt(schluessel);
+        System.out.println(schluessel + " gelöscht");
+
     }
     
     /**

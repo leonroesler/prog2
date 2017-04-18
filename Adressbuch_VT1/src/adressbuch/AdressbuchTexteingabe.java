@@ -1,5 +1,6 @@
 package adressbuch;
 
+import com.sun.javafx.geom.AreaOp;
 import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.sql.SQLOutput;
@@ -108,16 +109,29 @@ public class AdressbuchTexteingabe {
      * Findet genau einen Kontakt, der zu dem eingegeben Schlüssel passt
      */
     private void holeEintrag() {
+        if (buch.gibAnzahlEintraege() <= 0) {
+            System.err.println("Das Adressbuch ist leer");
+            starten();
+        }
         System.out.println("Suchschluessel eingeben:");
         String schluessel = parser.zeileEinlesen();
-        Kontakt ergebnis = buch.getKontakt(schluessel);
-        System.out.println(ergebnis);
+        try {
+            Kontakt ergebnis = buch.getKontakt(schluessel);
+            System.out.println(ergebnis);
+        }
+        catch (Exception ex){
+            System.err.println(ex.getMessage());
+        }
     }
 
     /**
      * Entfernt genau einen Eintrag, der zu dem eingegeben Schlüssel passt
      */
     private void entferneEintrag() {
+        if (buch.gibAnzahlEintraege() <= 0) {
+            System.err.println("Das Adressbuch ist leer");
+            starten();
+        }
         System.out.println("Suchschluessel eingeben:");
         String schluessel = parser.zeileEinlesen();
         try {

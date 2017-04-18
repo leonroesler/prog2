@@ -38,6 +38,15 @@ public class Adressbuch {
      * @return den zum Schluessel gehoerenden Kontakt.
      */
     public Kontakt getKontakt(String schluessel) {
+        if (schluessel.isEmpty() || schluessel == null || schluessel == "") {
+            throw new IllegalArgumentException("Bitte geben sie einen korrekten Schluessel ein");
+        }
+        if (buch.isEmpty()){
+            throw new NullPointerException("Im Adressbuch befinden sich im Moment noch keine Kontakte");
+        }
+        if (!schluesselBekannt(schluessel)){
+            throw new NullPointerException("Zu diesem Schluessel gibt es keinen Eintrag");
+        }
         return buch.get(schluessel);
     }
 
@@ -57,6 +66,7 @@ public class Adressbuch {
      * @param kontakt der neue Kontakt.
      */
     public void addKontakt(Kontakt kontakt) {
+        if (kontakt == null) throw new NullPointerException("Beim Erstellen des Kontaektes ist ein Fehler aufgetreten");
         buch.put(kontakt.getName(), kontakt);
         buch.put(kontakt.getTelefon(), kontakt);
         anzahlEintraege++;
@@ -67,7 +77,7 @@ public class Adressbuch {
      * Schluessel eingetragen war.
      *
      * @param alterSchluessel einer der verwendeten Schl?ssel.
-     * @param daten die neuen Kontaktdaten.
+     * @param daten           die neuen Kontaktdaten.
      */
     public void updateKontakt(String alterSchluessel, Kontakt daten) {
         deleteKontakt(alterSchluessel);
@@ -115,21 +125,21 @@ public class Adressbuch {
     /**
      * Entferne den Eintrag mit dem gegebenen Schluessel aus diesem Adressbuch.
      *
-     * @exception NullPointerException
-     * @exception IllegalArgumentException
      * @param schluessel einer der Schluessel des Eintrags, der entfernt werden
-     * soll.
+     *                   soll.
      * @return den geloeschten Kontakt oder null
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
      */
     public void deleteKontakt(String schluessel) {
-        if (schluessel.isEmpty() || schluessel == ""){
+        if (schluessel.isEmpty() || schluessel == "") {
             throw new IllegalArgumentException("Es muss ein Schluessel eingegeben werden");
         }
-        if (schluessel == null){
+        if (schluessel == null) {
             throw new NullPointerException("Es wurde ein falscher Schluessel uebergeben");
         }
         Kontakt kontakt = buch.get(schluessel);
-        if (kontakt == null){
+        if (kontakt == null) {
             throw new NullPointerException("Es wurde kein Kontakt mit diesem Schluessel gefunden");
         }
         buch.remove(kontakt.getName());
@@ -164,16 +174,16 @@ public class Adressbuch {
 
     public void setTestData() {
         Kontakt[] testdaten = {
-            new Kontakt("david", "08459 100000", "david@gmx.de"),
-            new Kontakt("michael", "08459 200000", "michael@gmx.de"),
-            new Kontakt("john", "08459 300000", "john@gmx.de"),
-            new Kontakt("heike", "08459 400000", "heike@gmx.de"),
-            new Kontakt("emma", "08459 500000", "emma@gmx.de"),
-            new Kontakt("simone", "08459 600000", "simone@gmx.de"),
-            new Kontakt("chris", "08459 700000", "chris@gmx.de"),
-            new Kontakt("axel", "08459 800000", "axel@gmx.de"),};
+                new Kontakt("david", "08459 100000", "david@gmx.de"),
+                new Kontakt("michael", "08459 200000", "michael@gmx.de"),
+                new Kontakt("john", "08459 300000", "john@gmx.de"),
+                new Kontakt("heike", "08459 400000", "heike@gmx.de"),
+                new Kontakt("emma", "08459 500000", "emma@gmx.de"),
+                new Kontakt("simone", "08459 600000", "simone@gmx.de"),
+                new Kontakt("chris", "08459 700000", "chris@gmx.de"),
+                new Kontakt("axel", "08459 800000", "axel@gmx.de"),};
         for (Kontakt kontakt : testdaten) {
-                addKontakt(kontakt);
+            addKontakt(kontakt);
         }
     }
 }

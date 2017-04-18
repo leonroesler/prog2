@@ -22,8 +22,11 @@ public class Kontakt implements Comparable<Kontakt> {
      * @param telefon die Telefonnummer.
      * @param email die Email-Adresse.
      */
-    public Kontakt(String name, String telefon, String email) {
+    public Kontakt(String name, String telefon, String email) throws IllegalStateException{
         // Leere Strings verwenden, wenn einer der Parameter null ist.
+        if(name == null || name.isEmpty() || name == "" && telefon == null || telefon.isEmpty() || telefon == ""){
+            throw new IllegalStateException("Es muss entweder für Name oder Telefonnummer ein Wert eingetragen werden! Versuchen sie es erneut:");
+        }
         if (name == null) {
             name = "";
         }

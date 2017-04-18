@@ -115,12 +115,23 @@ public class Adressbuch {
     /**
      * Entferne den Eintrag mit dem gegebenen Schluessel aus diesem Adressbuch.
      *
+     * @exception NullPointerException
+     * @exception IllegalArgumentException
      * @param schluessel einer der Schluessel des Eintrags, der entfernt werden
      * soll.
      * @return den geloeschten Kontakt oder null
      */
     public void deleteKontakt(String schluessel) {
+        if (schluessel.isEmpty() || schluessel == ""){
+            throw new IllegalArgumentException("Es muss ein Schluessel eingegeben werden");
+        }
+        if (schluessel == null){
+            throw new NullPointerException("Es wurde ein falscher Schluessel uebergeben");
+        }
         Kontakt kontakt = buch.get(schluessel);
+        if (kontakt == null){
+            throw new NullPointerException("Es wurde kein Kontakt mit diesem Schluessel gefunden");
+        }
         buch.remove(kontakt.getName());
         buch.remove(kontakt.getTelefon());
         anzahlEintraege--;

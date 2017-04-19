@@ -24,12 +24,15 @@ public class Kontakt implements Comparable<Kontakt> {
      */
     public Kontakt(String name, String telefon, String email) {
         // Leere Strings verwenden, wenn einer der Parameter null ist.
+        // wieso funktioniert ein name == "" nicht?
+        if(name.isEmpty() && telefon.isEmpty()){throw new IllegalStateException("Bitte geben Sie entweder einen Namen oder eine Telefonnummer ein");}
         if (name == null) {
             name = "";
         }
         if (telefon == null) {
             telefon = "";
         }
+
         if (email == null) {
             email = "";
         }

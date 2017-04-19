@@ -118,8 +118,12 @@ public class Adressbuch {
      * @param schluessel einer der Schluessel des Eintrags, der entfernt werden
      * soll.
      * @return den geloeschten Kontakt oder null
+     * @exception
      */
     public void deleteKontakt(String schluessel) {
+
+        if(schluessel == null) {throw new NullPointerException("Der zu löschende Kontakt existiert nicht");}
+        if(schluessel.isEmpty() || schluessel =="") {throw new IllegalArgumentException("Es wurde kein passender Kontakt gefunden");}
         Kontakt kontakt = buch.get(schluessel);
         buch.remove(kontakt.getName());
         buch.remove(kontakt.getTelefon());

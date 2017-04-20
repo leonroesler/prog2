@@ -1,9 +1,7 @@
-package adressbuch;
+package adressbuch_VT1;
 
-import com.sun.javafx.geom.AreaOp;
-import com.sun.org.apache.xpath.internal.SourceTree;
-
-import java.sql.SQLOutput;
+import adressbuch_VT2.Kontakt;
+import adressbuch_VT2.Parser;
 
 /**
  * Eine textuelle Schnittstelle fuer ein Adressbuch.
@@ -15,16 +13,16 @@ import java.sql.SQLOutput;
  */
 public class AdressbuchTexteingabe {
     // Das Adressbuch, das angezeigt und manipuliert werden soll.
-    private Adressbuch buch;
+    private adressbuch_VT2.Adressbuch buch;
     // Ein Parser fuer die Befehlswoerter.
-    private Parser parser;
+    private adressbuch_VT2.Parser parser;
 
     /**
      * Konstruktor fuer Objekte der Klasse AdressbuchTexteingabe.
      *
      * @param buch das Adressbuch, das manipuliert werden soll.
      */
-    public AdressbuchTexteingabe(Adressbuch buch) {
+    public AdressbuchTexteingabe(adressbuch_VT2.Adressbuch buch) {
         this.buch = buch;
         parser = new Parser();
     }
@@ -69,7 +67,7 @@ public class AdressbuchTexteingabe {
      *
      * @return Kontakt
      */
-    private Kontakt kontaktEinlesen() {
+    private adressbuch_VT2.Kontakt kontaktEinlesen() {
 
         System.out.print("Name: ");
         String name = parser.zeileEinlesen();
@@ -77,7 +75,7 @@ public class AdressbuchTexteingabe {
         String telefon = parser.zeileEinlesen();
         System.out.print("Email: ");
         String adresse = parser.zeileEinlesen();
-        return new Kontakt(name, telefon, adresse);
+        return new adressbuch_VT2.Kontakt(name, telefon, adresse);
     }
 
     /**
@@ -98,7 +96,7 @@ public class AdressbuchTexteingabe {
     private void sucheEintrag() {
         System.out.println("Praefix des Suchschluessels:");
         String praefix = parser.zeileEinlesen();
-        Kontakt[] ergebnisse = buch.getKontakte(praefix);
+        adressbuch_VT2.Kontakt[] ergebnisse = buch.getKontakte(praefix);
         for (int i = 0; i < ergebnisse.length; i++) {
             System.out.println(ergebnisse[i]);
             System.out.println("=====");
@@ -116,7 +114,7 @@ public class AdressbuchTexteingabe {
         System.out.println("Suchschluessel eingeben:");
         String schluessel = parser.zeileEinlesen();
         try {
-            Kontakt ergebnis = buch.getKontakt(schluessel);
+            adressbuch_VT2.Kontakt ergebnis = buch.getKontakt(schluessel);
             System.out.println(ergebnis);
         }
         catch (Exception ex){

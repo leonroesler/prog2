@@ -1,4 +1,6 @@
-package adressbuch;
+package adressbuch_VT1;
+
+import adressbuch_VT2.AdressbuchTexteingabe;
 
 /**
  * Eine einfache Demo der Klasse Adressbuch.
@@ -10,8 +12,8 @@ package adressbuch;
  */
 public class AdressbuchDemo
 {
-    private Adressbuch buch;
-    private AdressbuchTexteingabe interaktion;
+    private adressbuch_VT2.Adressbuch buch;
+    private adressbuch_VT2.AdressbuchTexteingabe interaktion;
 
     /**
      * Lege ein Adressbuch mit Testdaten an.
@@ -21,7 +23,7 @@ public class AdressbuchDemo
      */
     public AdressbuchDemo()
     {
-        buch = new Adressbuch();
+        buch = new adressbuch_VT2.Adressbuch();
         interaktion = new AdressbuchTexteingabe(buch);
     }
     
@@ -36,13 +38,13 @@ public class AdressbuchDemo
     /**
      * @return das Adressbuch mit den Testdaten.
      */
-    public Adressbuch gibAdressbuch()
+    public adressbuch_VT2.Adressbuch gibAdressbuch()
     {
         return buch;
     }
     
     public static void main(String[] args) {
-        AdressbuchDemo demo = new AdressbuchDemo();
+        adressbuch_VT2.AdressbuchDemo demo = new adressbuch_VT2.AdressbuchDemo();
         demo.zeigeSchnittstelle();
     }
 }

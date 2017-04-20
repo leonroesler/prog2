@@ -1,4 +1,4 @@
-package adressbuch;
+package adressbuch_VT1;
 
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import java.util.TreeSet;
 public class Adressbuch {
 
     // Speicher fuer beliebige Anzahl von Kontakten.
-    private TreeMap<String, Kontakt> buch;
+    private TreeMap<String, adressbuch_VT2.Kontakt> buch;
     private int anzahlEintraege;
 
     /**
      * Initialisiere ein neues Adressbuch.
      */
     public Adressbuch() {
-        buch = new TreeMap<String, Kontakt>();
+        buch = new TreeMap<String, adressbuch_VT2.Kontakt>();
         anzahlEintraege = 0;
         setTestData();
     }
@@ -37,7 +37,7 @@ public class Adressbuch {
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return den zum Schluessel gehoerenden Kontakt.
      */
-    public Kontakt getKontakt(String schluessel) {
+    public adressbuch_VT2.Kontakt getKontakt(String schluessel) {
         if (schluessel.isEmpty() || schluessel == null || schluessel == "") {
             throw new IllegalArgumentException("Bitte geben sie einen korrekten Schluessel ein");
         }
@@ -65,7 +65,7 @@ public class Adressbuch {
      *
      * @param kontakt der neue Kontakt.
      */
-    public void addKontakt(Kontakt kontakt) {
+    public void addKontakt(adressbuch_VT2.Kontakt kontakt) {
         if (kontakt == null) throw new NullPointerException("Beim Erstellen des Kontaektes ist ein Fehler aufgetreten");
         buch.put(kontakt.getName(), kontakt);
         buch.put(kontakt.getTelefon(), kontakt);
@@ -79,7 +79,7 @@ public class Adressbuch {
      * @param alterSchluessel einer der verwendeten Schl?ssel.
      * @param daten           die neuen Kontaktdaten.
      */
-    public void updateKontakt(String alterSchluessel, Kontakt daten) {
+    public void updateKontakt(String alterSchluessel, adressbuch_VT2.Kontakt daten) {
         deleteKontakt(alterSchluessel);
         addKontakt(daten);
     }
@@ -91,15 +91,15 @@ public class Adressbuch {
      * @param praefix der Schluesselpraefix, nach dem gesucht werden soll.
      * @return ein Array mit den gefundenen Kontakten.
      */
-    public Kontakt[] getKontakte(String praefix) {
+    public adressbuch_VT2.Kontakt[] getKontakte(String praefix) {
         if (praefix == null || praefix.isEmpty()) {
             return getAlleKontakte();
         }
         // Eine Liste fuer die Treffer anlegen.
-        List<Kontakt> treffer = new ArrayList<Kontakt>();
+        List<adressbuch_VT2.Kontakt> treffer = new ArrayList<adressbuch_VT2.Kontakt>();
         // Finden von Schluesseln, die gleich dem oder groesser als
         // der Praefix sind.
-        SortedMap<String, Kontakt> rest = buch.tailMap(praefix);
+        SortedMap<String, adressbuch_VT2.Kontakt> rest = buch.tailMap(praefix);
         Iterator<String> it = rest.keySet().iterator();
         // Stoppen bei der ersten Nichtuebereinstimmung.
         while (it.hasNext()) {
@@ -110,7 +110,7 @@ public class Adressbuch {
                 break;
             }
         }
-        Kontakt[] ergebnisse = new Kontakt[treffer.size()];
+        adressbuch_VT2.Kontakt[] ergebnisse = new adressbuch_VT2.Kontakt[treffer.size()];
         treffer.toArray(ergebnisse);
         return ergebnisse;
     }
@@ -138,7 +138,7 @@ public class Adressbuch {
         if (schluessel == null) {
             throw new NullPointerException("Es wurde ein falscher Schluessel uebergeben");
         }
-        Kontakt kontakt = buch.get(schluessel);
+        adressbuch_VT2.Kontakt kontakt = buch.get(schluessel);
         if (kontakt == null) {
             throw new NullPointerException("Es wurde kein Kontakt mit diesem Schluessel gefunden");
         }
@@ -156,8 +156,8 @@ public class Adressbuch {
         // muss ein Set mit den Kontakten gebildet werden. Dadurch
         // werden Duplikate entfernt.
         StringBuffer alleEintraege = new StringBuffer();
-        Set<Kontakt> sortierteDaten = new TreeSet<Kontakt>(buch.values());
-        for (Kontakt kontakt : sortierteDaten) {
+        Set<adressbuch_VT2.Kontakt> sortierteDaten = new TreeSet<adressbuch_VT2.Kontakt>(buch.values());
+        for (adressbuch_VT2.Kontakt kontakt : sortierteDaten) {
             alleEintraege.append(kontakt);
             alleEintraege.append('\n');
             alleEintraege.append('\n');
@@ -165,24 +165,24 @@ public class Adressbuch {
         return alleEintraege.toString();
     }
 
-    public Kontakt[] getAlleKontakte() {
-        Set<Kontakt> sortierteDaten = new TreeSet<Kontakt>(buch.values());
-        Kontakt[] ergebnisse = new Kontakt[sortierteDaten.size()];
+    public adressbuch_VT2.Kontakt[] getAlleKontakte() {
+        Set<adressbuch_VT2.Kontakt> sortierteDaten = new TreeSet<adressbuch_VT2.Kontakt>(buch.values());
+        adressbuch_VT2.Kontakt[] ergebnisse = new adressbuch_VT2.Kontakt[sortierteDaten.size()];
         sortierteDaten.toArray(ergebnisse);
         return ergebnisse;
     }
 
     public void setTestData() {
-        Kontakt[] testdaten = {
-                new Kontakt("david", "08459 100000", "david@gmx.de"),
-                new Kontakt("michael", "08459 200000", "michael@gmx.de"),
-                new Kontakt("john", "08459 300000", "john@gmx.de"),
-                new Kontakt("heike", "08459 400000", "heike@gmx.de"),
-                new Kontakt("emma", "08459 500000", "emma@gmx.de"),
-                new Kontakt("simone", "08459 600000", "simone@gmx.de"),
-                new Kontakt("chris", "08459 700000", "chris@gmx.de"),
-                new Kontakt("axel", "08459 800000", "axel@gmx.de"),};
-        for (Kontakt kontakt : testdaten) {
+        adressbuch_VT2.Kontakt[] testdaten = {
+                new adressbuch_VT2.Kontakt("david", "08459 100000", "david@gmx.de"),
+                new adressbuch_VT2.Kontakt("michael", "08459 200000", "michael@gmx.de"),
+                new adressbuch_VT2.Kontakt("john", "08459 300000", "john@gmx.de"),
+                new adressbuch_VT2.Kontakt("heike", "08459 400000", "heike@gmx.de"),
+                new adressbuch_VT2.Kontakt("emma", "08459 500000", "emma@gmx.de"),
+                new adressbuch_VT2.Kontakt("simone", "08459 600000", "simone@gmx.de"),
+                new adressbuch_VT2.Kontakt("chris", "08459 700000", "chris@gmx.de"),
+                new adressbuch_VT2.Kontakt("axel", "08459 800000", "axel@gmx.de"),};
+        for (adressbuch_VT2.Kontakt kontakt : testdaten) {
             addKontakt(kontakt);
         }
     }

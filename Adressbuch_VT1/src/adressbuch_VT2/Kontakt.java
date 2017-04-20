@@ -1,6 +1,4 @@
-package adressbuch;
-
-import java.io.Serializable;
+package adressbuch_VT2;
 
 /**
  * Die Kontaktdaten fuer einen Eintrag in einem Adressbuch: Name, Adresse,
@@ -22,11 +20,8 @@ public class Kontakt implements Comparable<Kontakt> {
      * @param telefon die Telefonnummer.
      * @param email die Email-Adresse.
      */
-    public Kontakt(String name, String telefon, String email) throws IllegalStateException{
+    public Kontakt(String name, String telefon, String email) {
         // Leere Strings verwenden, wenn einer der Parameter null ist.
-        if(name == null || name.isEmpty() || name == "" && telefon == null || telefon.isEmpty() || telefon == ""){
-            throw new IllegalStateException("Es muss entweder für Name oder Telefonnummer ein Wert eingetragen werden! Versuchen sie es erneut:");
-        }
         if (name == null) {
             name = "";
         }
@@ -36,14 +31,14 @@ public class Kontakt implements Comparable<Kontakt> {
         if (email == null) {
             email = "";
         }
-
         this.name = name.trim();
         this.telefon = telefon.trim();
         this.email = email.trim();
+        if(name.equals("") && telefon.equals("")) 
+            throw new IllegalStateException("Name und Telefonnummer dürfen nicht beide leer sein.");
     }
 
     String gibKontaktString() {
-
         return name + ":" + telefon + ":" + email;
     }
     

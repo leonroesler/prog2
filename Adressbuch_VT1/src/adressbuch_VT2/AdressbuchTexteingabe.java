@@ -60,6 +60,9 @@ public class AdressbuchTexteingabe
             else if(command.equals("aendere")){
                 aendereEintrag();
             }
+            else if(command.equals("checkNull")){
+                checkNull();
+            }
             else{
                 // nichts tun.
             }
@@ -100,13 +103,20 @@ public class AdressbuchTexteingabe
     private void holeEintrag() {
         System.out.println("Schluessel fuer den Eintrag:");
         String schluessel = parser.zeileEinlesen();
-        adressbuch_VT2.Kontakt ergebnis = buch.getKontakt(schluessel);
+        try {
+            adressbuch_VT2.Kontakt ergebnis = buch.getKontakt(schluessel);
+        }
+        catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+        /**
         if(ergebnis != null) {
             System.out.println("Der gesuchte Kontakt lautet:");
             System.out.println(ergebnis);
         }
         else System.out.println("Kein Kontakt gefunden");
         System.out.println();
+         */
     }
     
     private void entferneEintrag() {
@@ -115,7 +125,7 @@ public class AdressbuchTexteingabe
         try {
             buch.deleteKontakt(schluessel);
         }
-        catch(NullPointerException e) {
+        catch(Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -133,11 +143,20 @@ public class AdressbuchTexteingabe
                 buch.updateKontakt(schluessel, neuerKontakt);
                 falsch = false;
             }
-            catch (IllegalStateException e){
+            catch (Exception e){
                 System.out.println(e.getMessage());
             }
         }
 
+    }
+
+    private void checkNull(){
+        try {
+            buch.deleteKontakt(null);
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     private adressbuch_VT2.Kontakt kontaktEinlesen() {

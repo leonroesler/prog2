@@ -4,11 +4,11 @@ import java.util.*;
 
 /**
  * Eine Klasse zur Verwaltung einer beliebigen Anzahl von Kontakten. Die Daten
- * werden sowohl ueber den Namen als auch ueber die Telefonnummer indiziert.
- *
- * @author David J. Barnes und Michael K?lling.
- * @version 2008.03.30
- */
+        * werden sowohl ueber den Namen als auch ueber die Telefonnummer indiziert.
+        *
+        * @author David J. Barnes und Michael K?lling.
+        * @version 2008.03.30
+        */
 public class Adressbuch {
 
     // Speicher fuer beliebige Anzahl von Kontakten.
@@ -31,10 +31,10 @@ public class Adressbuch {
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return den zum Schluessel gehoerenden Kontakt.
      */
-    public Kontakt getKontakt(String schluessel) {
-        if(schluesselBekannt(schluessel))
+    public Kontakt getKontakt(String schluessel) throws UngeueltigerSchluesselException{
+        if(schluesselBekannt(schluessel)) {
             return buch.get(schluessel);
-        else {
+        }else {
             throw new NullPointerException();
         }
     }
@@ -44,8 +44,15 @@ public class Adressbuch {
      *
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return true wenn der Schluessel eingetragen ist, false sonst.
+     * @throws UngeueltigerSchluesselException besagt, dass der Schluessel ein leerer String war
      */
-    public boolean schluesselBekannt(String schluessel) {
+    public boolean schluesselBekannt(String schluessel) throws UngeueltigerSchluesselException {
+        if(schluessel == null) {
+            throw new IllegalArgumentException("Das Argument schluessel darf nicht den Wert null haben!");
+        }
+        if (schluessel == ""){
+            throw new UngeueltigerSchluesselException("Der Schluessel darf nicht leer sein!");
+        }
         return buch.containsKey(schluessel);
     }
 
@@ -55,7 +62,7 @@ public class Adressbuch {
      * @param kontakt der neue Kontakt.
      */
     public void addKontakt(Kontakt kontakt) {
-        if(kontakt == null) throw new IllegalArgumentException("Beim erstellen des Kontaktes ist ein Fehler aufgetreten");
+        if(kontakt == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
         buch.put(kontakt.getName(), kontakt);
         buch.put(kontakt.getTelefon(), kontakt);
         anzahlEintraege++;
@@ -68,7 +75,11 @@ public class Adressbuch {
      * @param alterSchluessel einer der verwendeten Schl?ssel.
      * @param daten die neuen Kontaktdaten.
      */
-    public void updateKontakt(String alterSchluessel, Kontakt daten) {
+    public void updateKontakt(String alterSchluessel, Kontakt daten) throws UngeueltigerSchluesselException{
+        if(daten == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
+        if (!schluesselBekannt(alterSchluessel)) {
+            throw new IllegalArgumentException("Der Kontakt der geupdatet werden soll, existiert im Adressbuch nicht");
+        }
         deleteKontakt(alterSchluessel);
         addKontakt(daten);
     }
@@ -118,9 +129,10 @@ public class Adressbuch {
      * soll.
      * @return den geloeschten Kontakt oder null
      */
-    public Kontakt deleteKontakt(String schluessel) {
-        if(schluessel == null) 
-            throw new IllegalStateException("Das Argument schluessel darf nicht den Wert null haben!");
+    public Kontakt deleteKontakt(String schluessel) throws UngeueltigerSchluesselException{
+        if (!schluesselBekannt(schluessel)) {
+            throw new IllegalArgumentException("Der Kontakt der geloescht werden soll, existiert im Adressbuch nicht");
+        }
         Kontakt kontakt = buch.get(schluessel);
         if(kontakt != null) {
         buch.remove(kontakt.getName());

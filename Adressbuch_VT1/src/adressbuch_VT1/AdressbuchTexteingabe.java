@@ -136,7 +136,7 @@ public class AdressbuchTexteingabe {
             buch.deleteKontakt(schluessel);
             System.out.println(schluessel + " gelöscht");
         }
-        catch (NullPointerException | IllegalArgumentException ex){
+        catch (Exception ex){
             System.err.println(ex.getMessage());
         }
 
@@ -154,7 +154,7 @@ public class AdressbuchTexteingabe {
             buch.updateKontakt(schluessel, geaendertetKontakt);
             System.out.println(geaendertetKontakt.getName() + " geupdatet");
         }
-        catch (IllegalStateException ex){
+        catch (Exception ex){
             System.err.println(ex.getMessage());
             aendereEintrag();
         }

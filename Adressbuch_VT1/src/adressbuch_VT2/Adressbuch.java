@@ -46,6 +46,8 @@ public class Adressbuch {
      * @return true wenn der Schluessel eingetragen ist, false sonst.
      */
     public boolean schluesselBekannt(String schluessel) {
+        if(schluessel == null)
+            throw new IllegalStateException("Das Argument schluessel darf nicht den Wert null haben!");
         return buch.containsKey(schluessel);
     }
 
@@ -124,8 +126,6 @@ public class Adressbuch {
      * @return den geloeschten Kontakt oder null
      */
     public Kontakt deleteKontakt(String schluessel) {
-        if(schluessel == null) 
-            throw new IllegalStateException("Das Argument schluessel darf nicht den Wert null haben!");
         Kontakt kontakt = buch.get(schluessel);
         if(kontakt != null) {
         buch.remove(kontakt.getName());

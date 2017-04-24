@@ -69,8 +69,13 @@ public class Adressbuch {
      * @param daten die neuen Kontaktdaten.
      */
     public void updateKontakt(String alterSchluessel, Kontakt daten) {
-        deleteKontakt(alterSchluessel);
-        addKontakt(daten);
+        if(schluesselBekannt(alterSchluessel)) {
+            if (daten == null)
+                throw new IllegalArgumentException("Beim erstellen des Kontaktes ist ein Fehler aufgetreten");
+            deleteKontakt(alterSchluessel);
+            addKontakt(daten);
+        }
+        else {throw new NullPointerException();}
     }
 
     /**

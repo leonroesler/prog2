@@ -2,6 +2,7 @@ package adressbuch_VT1;
 
 import adressbuch_VT2.Kontakt;
 import adressbuch_VT2.Parser;
+import adressbuch_VT2.UngeueltigerSchluesselException;
 
 /**
  * Eine textuelle Schnittstelle fuer ein Adressbuch.
@@ -32,7 +33,7 @@ public class AdressbuchTexteingabe {
      * Interaktionen mit dem Adressbuch ermoeglichen.
      * Stoppe, wenn der Benutzer 'ende' eingibt.
      */
-    public void starten() {
+    public void starten() throws UngeueltigerSchluesselException {
         System.out.println(" -- Adressbuch --");
         System.out.println("Tippen Sie 'hilfe' fuer eine Liste der Befehle.");
 
@@ -81,11 +82,12 @@ public class AdressbuchTexteingabe {
     /**
      * Fuege einen neuen Eintrag hinzu.
      */
-    private void neuerEintrag() {
+    private void neuerEintrag() throws UngeueltigerSchluesselException {
         try {
             buch.addKontakt(kontaktEinlesen());
         } catch (IllegalStateException ex) {
             System.err.println(ex.getMessage());
+            System.out.println("Neuer Versuch: ");
             neuerEintrag();
         }
     }
@@ -106,7 +108,7 @@ public class AdressbuchTexteingabe {
     /**
      * Findet genau einen Kontakt, der zu dem eingegeben Schlüssel passt
      */
-    private void holeEintrag() {
+    private void holeEintrag() throws UngeueltigerSchluesselException {
         if (buch.gibAnzahlEintraege() <= 0) {
             System.err.println("Das Adressbuch ist leer");
             starten();
@@ -125,7 +127,7 @@ public class AdressbuchTexteingabe {
     /**
      * Entfernt genau einen Eintrag, der zu dem eingegeben Schlüssel passt
      */
-    private void entferneEintrag() {
+    private void entferneEintrag() throws UngeueltigerSchluesselException {
         if (buch.gibAnzahlEintraege() <= 0) {
             System.err.println("Das Adressbuch ist leer");
             starten();

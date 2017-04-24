@@ -30,8 +30,7 @@ public class AdressbuchTexteingabe
      * Interaktionen mit dem Adressbuch ermoeglichen.
      * Stoppe, wenn der Benutzer 'ende' eingibt.
      */
-    public void starten()
-    {
+    public void starten() throws UngeueltigerSchluesselException {
         System.out.println(" -- Adressbuch --");
         System.out.println("Tippen Sie 'hilfe' fuer eine Liste der Befehle.");
         
@@ -74,8 +73,7 @@ public class AdressbuchTexteingabe
     /**
      * Fuege einen neuen Eintrag hinzu.
      */
-    private void neuerEintrag()
-    {
+    private void neuerEintrag() throws UngeueltigerSchluesselException {
         try {
             buch.addKontakt(kontaktEinlesen());
         }
@@ -126,7 +124,7 @@ public class AdressbuchTexteingabe
             buch.deleteKontakt(schluessel);
         }
         catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
     
@@ -144,7 +142,7 @@ public class AdressbuchTexteingabe
                 falsch = false;
             }
             catch (Exception e){
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
 
@@ -155,7 +153,7 @@ public class AdressbuchTexteingabe
             buch.deleteKontakt(null);
         }
         catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
     

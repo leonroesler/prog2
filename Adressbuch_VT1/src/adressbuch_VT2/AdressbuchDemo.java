@@ -19,8 +19,7 @@ public class AdressbuchDemo
      * Das Adressbuch wird an eine textuelle Benutzungsschnittstelle
      * weitergegeben, um die interaktive Manipulation zu erm�glichen.
      */
-    public AdressbuchDemo()
-    {
+    public AdressbuchDemo() throws UngeueltigerSchluesselException {
         buch = new adressbuch_VT2.Adressbuch();
         interaktion = new AdressbuchTexteingabe(buch);
     }
@@ -28,8 +27,7 @@ public class AdressbuchDemo
     /**
      * Ermoegliche dem Benutzer die Interaktion mit dem Adressbuch.
      */
-    public void zeigeSchnittstelle()
-    {
+    public void zeigeSchnittstelle() throws UngeueltigerSchluesselException {
         interaktion.starten();
     }
 
@@ -41,7 +39,7 @@ public class AdressbuchDemo
         return buch;
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UngeueltigerSchluesselException {
         AdressbuchDemo demo = new AdressbuchDemo();
         demo.zeigeSchnittstelle();
     }

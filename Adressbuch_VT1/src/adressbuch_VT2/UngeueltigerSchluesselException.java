@@ -20,6 +20,6 @@ public class UngeueltigerSchluesselException extends Exception {
 
     @Override
     public String toString() {
-        return "Der Schluessel " + schluessel + " ist ungültig";
+        return "Der Schluessel ist ungültig";
     }
 }

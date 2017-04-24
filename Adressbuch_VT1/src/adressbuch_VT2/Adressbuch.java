@@ -18,7 +18,7 @@ public class Adressbuch {
     /**
      * Initialisiere ein neues Adressbuch.
      */
-    public Adressbuch() {
+    public Adressbuch() throws UngeueltigerSchluesselException {
         buch = new TreeMap<String, Kontakt>();
         anzahlEintraege = 0;
         setTestData();
@@ -31,11 +31,11 @@ public class Adressbuch {
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return den zum Schluessel gehoerenden Kontakt.
      */
-    public Kontakt getKontakt(String schluessel) throws UngeueltigerSchluesselException{
+    public Kontakt getKontakt(String schluessel) throws UngeueltigerSchluesselException, KeinPassenderKontaktException {
         if(schluesselBekannt(schluessel)) {
             return buch.get(schluessel);
         }else {
-            throw new NullPointerException();
+            throw new KeinPassenderKontaktException("Zu dem Schluessel " + schluessel + " konnte kein Kontakt gefunden werden!");
         }
     }
 
@@ -50,7 +50,7 @@ public class Adressbuch {
         if(schluessel == null) {
             throw new IllegalArgumentException("Das Argument schluessel darf nicht den Wert null haben!");
         }
-        if (schluessel == ""){
+        if (schluessel == ""  || schluessel.isEmpty()){
             throw new UngeueltigerSchluesselException("Der Schluessel darf nicht leer sein!");
         }
         return buch.containsKey(schluessel);
@@ -61,8 +61,11 @@ public class Adressbuch {
      *
      * @param kontakt der neue Kontakt.
      */
-    public void addKontakt(Kontakt kontakt) {
+    public void addKontakt(Kontakt kontakt) throws UngeueltigerSchluesselException {
         if(kontakt == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
+        if (schluesselBekannt(kontakt.getName()) || schluesselBekannt(kontakt.getEmail())){
+            throw new DoppelterSchluesselException(kontakt.getName());
+        }
         buch.put(kontakt.getName(), kontakt);
         buch.put(kontakt.getTelefon(), kontakt);
         anzahlEintraege++;
@@ -72,13 +75,14 @@ public class Adressbuch {
      * Aendere die Kontaktdaten des Kontakts, der bisher unter dem gegebenen
      * Schluessel eingetragen war.
      *
+     * @throws UngeueltigerSchluesselException wenn der eingegebene String für den Schluessel leer -oder im Adressbuch nicht vorhanden ist
      * @param alterSchluessel einer der verwendeten Schl?ssel.
      * @param daten die neuen Kontaktdaten.
      */
-    public void updateKontakt(String alterSchluessel, Kontakt daten) throws UngeueltigerSchluesselException{
+    public void updateKontakt(String alterSchluessel, Kontakt daten) throws UngeueltigerSchluesselException, KeinPassenderKontaktException {
         if(daten == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
         if (!schluesselBekannt(alterSchluessel)) {
-            throw new IllegalArgumentException("Der Kontakt der geupdatet werden soll, existiert im Adressbuch nicht");
+            throw new KeinPassenderKontaktException(alterSchluessel);
         }
         deleteKontakt(alterSchluessel);
         addKontakt(daten);
@@ -125,22 +129,21 @@ public class Adressbuch {
     /**
      * Entferne den Eintrag mit dem gegebenen Schluessel aus diesem Adressbuch.
      *
+     * @throws UngeueltigerSchluesselException wenn der eingegebene String für den Schluessel leer -oder im Adressbuch nicht vorhanden ist
      * @param schluessel einer der Schluessel des Eintrags, der entfernt werden
      * soll.
      * @return den geloeschten Kontakt oder null
      */
-    public Kontakt deleteKontakt(String schluessel) throws UngeueltigerSchluesselException{
+    public Kontakt deleteKontakt(String schluessel) throws UngeueltigerSchluesselException, KeinPassenderKontaktException {
         if (!schluesselBekannt(schluessel)) {
-            throw new IllegalArgumentException("Der Kontakt der geloescht werden soll, existiert im Adressbuch nicht");
+            throw new KeinPassenderKontaktException(schluessel);
         }
         Kontakt kontakt = buch.get(schluessel);
-        if(kontakt != null) {
         buch.remove(kontakt.getName());
         buch.remove(kontakt.getTelefon());
         anzahlEintraege--;
         return kontakt;
-        }
-        else throw new NullPointerException("Zu dem Schluessel " + schluessel + " konnte kein Kontakt gefunden werden!");
+
     }
 
     /**
@@ -168,7 +171,7 @@ public class Adressbuch {
         return ergebnisse;
     }
 
-    public void setTestData() {
+    public void setTestData() throws UngeueltigerSchluesselException {
         Kontakt[] testdaten = {
             new Kontakt("david", "08459 100000", "david@gmx.de"),
             new Kontakt("michael", "08459 200000", "michael@gmx.de"),

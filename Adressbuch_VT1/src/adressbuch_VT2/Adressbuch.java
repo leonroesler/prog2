@@ -27,15 +27,16 @@ public class Adressbuch {
     /**
      * Schlage einen Namen oder eine Telefonnummer nach und liefere den
      * zugehoerigen Kontakt.
+     *@throws UngueltigerSchluesselException wenn ein Schlüssel einen leeren String enthält
      *
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return den zum Schluessel gehoerenden Kontakt.
      */
-    public Kontakt getKontakt(String schluessel) {
+    public Kontakt getKontakt(String schluessel) throws UngueltigerSchluesselException {
         if(schluesselBekannt(schluessel))
             return buch.get(schluessel);
         else {
-            throw new NullPointerException();
+            throw new UngueltigerSchluesselException(schluessel);
         }
     }
 
@@ -126,6 +127,7 @@ public class Adressbuch {
      * @return den geloeschten Kontakt oder null
      */
     public Kontakt deleteKontakt(String schluessel) {
+
         Kontakt kontakt = buch.get(schluessel);
         if(kontakt != null) {
         buch.remove(kontakt.getName());

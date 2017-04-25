@@ -100,7 +100,12 @@ public class AdressbuchTexteingabe
     private void holeEintrag() {
         System.out.println("Schluessel fuer den Eintrag:");
         String schluessel = parser.zeileEinlesen();
-        adressbuch_VT2.Kontakt ergebnis = buch.getKontakt(schluessel);
+        Kontakt ergebnis = null;
+        try {
+            ergebnis = buch.getKontakt(schluessel);
+        } catch (UngueltigerSchluesselException e) {
+            e.printStackTrace();
+        }
         if(ergebnis != null) {
             System.out.println("Der gesuchte Kontakt lautet:");
             System.out.println(ergebnis);

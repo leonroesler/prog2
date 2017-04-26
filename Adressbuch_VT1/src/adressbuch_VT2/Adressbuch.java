@@ -46,9 +46,11 @@ public class Adressbuch {
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return true wenn der Schluessel eingetragen ist, false sonst.
      */
-    public boolean schluesselBekannt(String schluessel) {
+    public boolean schluesselBekannt(String schluessel) throws UngueltigerSchluesselException {
         if(schluessel == null)
-            throw new IllegalStateException("Das Argument schluessel darf nicht den Wert null haben!");
+            throw new IllegalArgumentException("Das Argument schluessel darf nicht den Wert null haben!");
+
+        if(schluessel.trim().length() == 0 || schluessel.isEmpty()){throw new UngueltigerSchluesselException(schluessel);}
         return buch.containsKey(schluessel);
     }
 
@@ -71,7 +73,7 @@ public class Adressbuch {
      * @param alterSchluessel einer der verwendeten Schl?ssel.
      * @param daten die neuen Kontaktdaten.
      */
-    public void updateKontakt(String alterSchluessel, Kontakt daten) {
+    public void updateKontakt(String alterSchluessel, Kontakt daten) throws KeinPassenderKontaktException, UngueltigerSchluesselException{
         if(schluesselBekannt(alterSchluessel)) {
             if (daten == null)
                 throw new IllegalArgumentException("Beim erstellen des Kontaktes ist ein Fehler aufgetreten");
@@ -126,7 +128,7 @@ public class Adressbuch {
      * soll.
      * @return den geloeschten Kontakt oder null
      */
-    public Kontakt deleteKontakt(String schluessel) {
+    public Kontakt deleteKontakt(String schluessel) throws KeinPassenderKontaktException {
 
         Kontakt kontakt = buch.get(schluessel);
         if(kontakt != null) {
@@ -135,7 +137,7 @@ public class Adressbuch {
         anzahlEintraege--;
         return kontakt;
         }
-        else throw new NullPointerException("Zu dem Schluessel " + schluessel + " konnte kein Kontakt gefunden werden!");
+        else throw new KeinPassenderKontaktException(schluessel);
     }
 
     /**

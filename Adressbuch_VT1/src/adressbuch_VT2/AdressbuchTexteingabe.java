@@ -122,6 +122,8 @@ public class AdressbuchTexteingabe
         }
         catch(NullPointerException e) {
             System.out.println(e.getMessage());
+        } catch (KeinPassenderKontaktException e) {
+            e.printStackTrace();
         }
     }
     
@@ -140,6 +142,10 @@ public class AdressbuchTexteingabe
             }
             catch (IllegalStateException e){
                 System.out.println(e.getMessage());
+            } catch (KeinPassenderKontaktException e) {
+                e.printStackTrace();
+            } catch (UngueltigerSchluesselException e) {
+                e.printStackTrace();
             }
         }
 

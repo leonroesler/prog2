@@ -1,7 +1,9 @@
 package adressbuch_VT1;
 
+import adressbuch_VT2.KeinPassenderKontaktException;
 import adressbuch_VT2.Kontakt;
 import adressbuch_VT2.Parser;
+import adressbuch_VT2.UngueltigerSchluesselException;
 
 /**
  * Eine textuelle Schnittstelle fuer ein Adressbuch.
@@ -138,6 +140,8 @@ public class AdressbuchTexteingabe {
         }
         catch (NullPointerException | IllegalArgumentException ex){
             System.err.println(ex.getMessage());
+        } catch (KeinPassenderKontaktException e) {
+            e.printStackTrace();
         }
 
     }
@@ -157,6 +161,10 @@ public class AdressbuchTexteingabe {
         catch (IllegalStateException ex){
             System.err.println(ex.getMessage());
             aendereEintrag();
+        } catch (KeinPassenderKontaktException e) {
+            e.printStackTrace();
+        } catch (UngueltigerSchluesselException e) {
+            e.printStackTrace();
         }
 
     }

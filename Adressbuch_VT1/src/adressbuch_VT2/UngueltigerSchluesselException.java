@@ -11,10 +11,12 @@ public class UngueltigerSchluesselException extends Exception {
         this.schluessel = schluessel;
     }
 
+
+
     public String getSchluessel() {
         return schluessel;
     }
         public String toString(){
-        return "Der Schlüssel" + schluessel + "ist ungültig";
+        return "Der Schlüssel " + schluessel + " ist ungültig";
         }
 }

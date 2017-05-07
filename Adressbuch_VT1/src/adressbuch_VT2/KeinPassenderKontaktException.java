@@ -6,12 +6,11 @@ package adressbuch_VT2;
  * @author Maren Mattern
  * @version 007
  */
-public class KeinPassenderKontaktException extends UngeueltigerSchluesselException {
+public class KeinPassenderKontaktException extends Exception {
 
     private String schluessel;
 
     public KeinPassenderKontaktException(String schluessel) {
-        super(schluessel);
         this.schluessel = schluessel;
     }
 
@@ -21,7 +20,7 @@ public class KeinPassenderKontaktException extends UngeueltigerSchluesselExcepti
 
     @Override
     public String toString() {
-        return "Zu dem Schluessel " + this.getSchluessel() + " gibt es keinen passenden Kontakt im Adressbuch";
+        return "Zu dem Schluessel " + this.schluessel + " gibt es keinen passenden Kontakt im Adressbuch";
     }
 
 }

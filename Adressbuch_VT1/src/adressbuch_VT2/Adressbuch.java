@@ -18,7 +18,7 @@ public class Adressbuch {
     /**
      * Initialisiere ein neues Adressbuch.
      */
-    public Adressbuch() throws UngeueltigerSchluesselException {
+    public Adressbuch() throws UngeueltigerSchluesselException, DoppelterSchluesselException {
         buch = new TreeMap<String, Kontakt>();
         anzahlEintraege = 0;
         setTestData();
@@ -31,11 +31,11 @@ public class Adressbuch {
      * @param schluessel der Name oder die Nummer zum Nachschlagen.
      * @return den zum Schluessel gehoerenden Kontakt.
      */
-    public Kontakt getKontakt(String schluessel) throws UngeueltigerSchluesselException, KeinPassenderKontaktException {
+    public Kontakt getKontakt(String schluessel) throws KeinPassenderKontaktException, UngeueltigerSchluesselException {
         if(schluesselBekannt(schluessel)) {
             return buch.get(schluessel);
         }else {
-            throw new KeinPassenderKontaktException("Zu dem Schluessel " + schluessel + " konnte kein Kontakt gefunden werden!");
+            throw new KeinPassenderKontaktException(schluessel);
         }
     }
 
@@ -48,10 +48,10 @@ public class Adressbuch {
      */
     public boolean schluesselBekannt(String schluessel) throws UngeueltigerSchluesselException {
         if(schluessel == null) {
-            throw new IllegalArgumentException("Das Argument schluessel darf nicht den Wert null haben!");
+            throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
         }
-        if (schluessel == ""  || schluessel.isEmpty()){
-            throw new UngeueltigerSchluesselException("Der Schluessel darf nicht leer sein!");
+        if (schluessel.isEmpty()){
+            throw new UngeueltigerSchluesselException(schluessel);
         }
         return buch.containsKey(schluessel);
     }
@@ -61,7 +61,7 @@ public class Adressbuch {
      *
      * @param kontakt der neue Kontakt.
      */
-    public void addKontakt(Kontakt kontakt) throws UngeueltigerSchluesselException {
+    public void addKontakt(Kontakt kontakt) throws UngeueltigerSchluesselException, DoppelterSchluesselException {
         if(kontakt == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
         if (schluesselBekannt(kontakt.getName()) || schluesselBekannt(kontakt.getEmail())){
             throw new DoppelterSchluesselException(kontakt.getName());
@@ -79,7 +79,7 @@ public class Adressbuch {
      * @param alterSchluessel einer der verwendeten Schl?ssel.
      * @param daten die neuen Kontaktdaten.
      */
-    public void updateKontakt(String alterSchluessel, Kontakt daten) throws UngeueltigerSchluesselException, KeinPassenderKontaktException {
+    public void updateKontakt(String alterSchluessel, Kontakt daten) throws UngeueltigerSchluesselException, KeinPassenderKontaktException, DoppelterSchluesselException {
         if(daten == null) throw new IllegalArgumentException("Die Methode wurde mit einem Null-Objekt fuer einen Kontakt aufgerufen");
         if (!schluesselBekannt(alterSchluessel)) {
             throw new KeinPassenderKontaktException(alterSchluessel);
@@ -171,7 +171,7 @@ public class Adressbuch {
         return ergebnisse;
     }
 
-    public void setTestData() throws UngeueltigerSchluesselException {
+    public void setTestData() throws UngeueltigerSchluesselException, DoppelterSchluesselException {
         Kontakt[] testdaten = {
             new Kontakt("david", "08459 100000", "david@gmx.de"),
             new Kontakt("michael", "08459 200000", "michael@gmx.de"),

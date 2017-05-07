@@ -14,12 +14,14 @@ public class UngeueltigerSchluesselException extends Exception {
         this.schluessel = schluessel;
     }
 
-    public String getSchluessel() {
+
+
+    public String getSchluessel(){
         return schluessel;
     }
 
     @Override
     public String toString() {
-        return "Der Schluessel ist ungültig";
+        return "Der eingegebene Schluessel " + schluessel + "ist ungueltig";
     }
 }

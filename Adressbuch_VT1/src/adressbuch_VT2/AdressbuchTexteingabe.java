@@ -30,7 +30,7 @@ public class AdressbuchTexteingabe
      * Interaktionen mit dem Adressbuch ermoeglichen.
      * Stoppe, wenn der Benutzer 'ende' eingibt.
      */
-    public void starten() throws UngeueltigerSchluesselException {
+    public void starten() throws UngeueltigerSchluesselException, KeinPassenderKontaktException, DoppelterSchluesselException {
         System.out.println(" -- Adressbuch --");
         System.out.println("Tippen Sie 'hilfe' fuer eine Liste der Befehle.");
         
@@ -73,13 +73,12 @@ public class AdressbuchTexteingabe
     /**
      * Fuege einen neuen Eintrag hinzu.
      */
-    private void neuerEintrag() throws UngeueltigerSchluesselException {
+    private void neuerEintrag() throws UngeueltigerSchluesselException, DoppelterSchluesselException {
         try {
             buch.addKontakt(kontaktEinlesen());
         }
         catch(IllegalStateException e) {
             System.out.println(e.getMessage());
-            neuerEintrag();
         }
 
     }
@@ -98,13 +97,14 @@ public class AdressbuchTexteingabe
         }
     }
     
-    private void holeEintrag() {
+    private void holeEintrag() throws UngeueltigerSchluesselException {
         System.out.println("Schluessel fuer den Eintrag:");
         String schluessel = parser.zeileEinlesen();
         try {
             adressbuch_VT2.Kontakt ergebnis = buch.getKontakt(schluessel);
+            System.out.println(ergebnis);
         }
-        catch (Exception e){
+        catch (KeinPassenderKontaktException e){
             System.err.println(e.getMessage());
         }
         /**
@@ -148,11 +148,12 @@ public class AdressbuchTexteingabe
 
     }
 
-    private void checkNull(){
+    //CHECK
+    private void checkNull() throws UngeueltigerSchluesselException, DoppelterSchluesselException {
         try {
-            buch.deleteKontakt(null);
+            buch.addKontakt(null);
         }
-        catch(Exception e) {
+        catch(IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }

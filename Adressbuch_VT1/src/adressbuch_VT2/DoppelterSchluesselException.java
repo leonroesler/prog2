@@ -11,8 +11,8 @@ public class DoppelterSchluesselException extends UngeueltigerSchluesselExceptio
     private String schluessel;
 
     public DoppelterSchluesselException(String schluessel) {
+
         super(schluessel);
-        this.schluessel = schluessel;
     }
 
     public String getSchluessel() {

@@ -85,7 +85,7 @@ public class AdressbuchTexteingabe {
     private void neuerEintrag() throws UngeueltigerSchluesselException {
         try {
             buch.addKontakt(kontaktEinlesen());
-        } catch (IllegalStateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
             System.out.println("Neuer Versuch: ");
             neuerEintrag();

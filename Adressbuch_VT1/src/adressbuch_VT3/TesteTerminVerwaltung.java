@@ -61,6 +61,54 @@ public class TesteTerminVerwaltung {
         System.out.println("Nach dem Hinzufuegen des neuen Termins: \n");
         termineAusgeben(allTermine);
     }
+
+    /**
+     * Pruefe, dass ein Terminupdate funktioniert
+     */
+    //@TODO: Liste muss nach dem Negaivtest unveränder sein!!! (siehe Methode in der Termin-Klasse)
+    public void testeTerminUpdate(){
+        // 1. neue terminverwaltung erstellen
+                verwaltung = new TerminVerwaltung();
+        Termin[] allTermine;
+        Termin ersterTermin;
+
+        System.out.println("Teste Terminupdate: \n");
+        System.out.println();
+
+        //*POSITIV-TEST*//
+        try{
+            // 2. Dummytermine hinzufuegen
+            dreiTermineHinzufuegen();
+            allTermine = verwaltung.getAllTermine();
+
+            // 3. Den ersten Termin nehmen, dort die Beschreibung ändern und damit updaten
+            ersterTermin= allTermine[0];
+            ersterTermin.setText("Testaenderung");
+            verwaltung.updateTermin(ersterTermin);
+
+        }catch (TerminUeberschneidungException ex){
+            System.out.println(ex);
+        }
+        allTermine = verwaltung.getAllTermine();
+        System.out.println("Nach dem Updaten der Beschreibung: \n");
+        termineAusgeben(allTermine);
+
+        /*NEGATIV-TEST*/
+        try{
+            allTermine = verwaltung.getAllTermine();
+
+            // 3. Den ersten Termin nehmen, dort die Zeit ändern und damit updaten
+            ersterTermin= allTermine[0];
+            ersterTermin.setVonBis(LocalTime.of(10,30), LocalTime.of(11,0));
+            verwaltung.updateTermin(ersterTermin);
+
+        }catch (UngueltigerTerminException ex){
+            System.out.println(ex);
+        }
+        allTermine = verwaltung.getAllTermine();
+        System.out.println("Nach dem Updaten der Zeit: \n");
+        termineAusgeben(allTermine);
+    }
     
 
     private void termineAusgeben(Termin[] termine) {
@@ -78,8 +126,8 @@ public class TesteTerminVerwaltung {
         TesteTerminVerwaltung tests = new TesteTerminVerwaltung();
 
         //tests.dreiTermineHinzufuegen();
-        tests.testeTerminueberschneidung();
-        //tests.testeTerminAendern();
+        //tests.testeTerminueberschneidung();
+        tests.testeTerminUpdate();
     }
 
 }

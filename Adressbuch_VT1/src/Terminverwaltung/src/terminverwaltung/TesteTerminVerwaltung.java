@@ -16,11 +16,7 @@ public class TesteTerminVerwaltung {
     private Termin t1;
     private Termin t2;
     private Termin t3;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/check3
     /**
      * Pruefe Basisfunktionalitaet, indem Termine am Tagesanfang, am Tagesende
      * und in der Mitte vereinbart werden.
@@ -69,7 +65,7 @@ public class TesteTerminVerwaltung {
         System.out.println("Nach dem Hinzufuegen des neuen Termins: \n");
         termineAusgeben(allTermine);
     }
-<<<<<<< HEAD
+
 
     public void testeTerminUpdate() {
         // 1. neue terminverwaltung erstellen
@@ -119,7 +115,7 @@ public class TesteTerminVerwaltung {
     }
 
 
-=======
+
     
     /**
      * Pruefe, ob eine Terminaenderung, die erlaubt ist, erfolgreich durchgefuehrt wird.
@@ -136,7 +132,7 @@ public class TesteTerminVerwaltung {
     }
 
     
->>>>>>> origin/check3
+
     private void termineAusgeben(Termin[] termine) {
         if (termine == null || termine.length == 0) {
             System.out.println("Keine Termine\n");
@@ -152,16 +148,16 @@ public class TesteTerminVerwaltung {
         TesteTerminVerwaltung tests = new TesteTerminVerwaltung();
 
         //tests.dreiTermineHinzufuegen();
-<<<<<<< HEAD
+
         //tests.testeTerminueberschneidung();
         //tests.testeTerminAendernPositiv();
         tests.testeTerminUpdate();
 
-=======
+
         tests.testeTerminueberschneidung();
         //tests.testeTerminAendernPositiv();
         //tests.testeTerminAendernNegativ();
->>>>>>> origin/check3
+
     }
 
 }

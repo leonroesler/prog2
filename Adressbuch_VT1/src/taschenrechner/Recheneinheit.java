@@ -16,6 +16,8 @@ public class Recheneinheit
     // Der linke Operand zum letzten Operator.
     private int linkerOperand;
 
+    private int storage;
+
     /**
      * Erzeuge eine Recheneinheit.
      */
@@ -24,6 +26,7 @@ public class Recheneinheit
         anzeigewert = 0;
         letzterOperator = ' ';
         linkerOperand = 0;
+        storage = 0;
     }
 
     /**
@@ -85,6 +88,7 @@ public class Recheneinheit
     public void clear()
     {
     	anzeigewert = 0;
+    	letzterOperator = ' ';
     }
 
     /**
@@ -131,5 +135,20 @@ public class Recheneinheit
             linkerOperand = anzeigewert;
         }
     }
-    
+
+    public void speicherEinlesen(int val) {
+        storage = val;
+        anzeigewert = 0;
+    }
+
+    public void speicherAuslesen(){
+        anzeigewert = storage;
+        storage     = 0;
+    }
+
+    public int gibSpeicher() {
+        return storage;
+    }
+
+
 }

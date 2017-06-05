@@ -26,6 +26,8 @@ public class RecheneinheitTester
     {
         testPlus();
         testMinus();
+        testPlus();
+
         System.out.println("Alle Tests erfolgreich.");
         System.out.println();
     }
